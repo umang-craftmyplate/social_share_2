@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath 'com.android.tools.build:gradle:8.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -25,19 +25,25 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 28
+    namespace "com.shekarmudaliyar.social_share"  // ✅ Required for AGP 8.0+
+    compileSdkVersion 35  // ✅ Use a stable version
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 24  // ✅ 16 is too old; use 21 or higher
+        targetSdkVersion 35
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    lintOptions {
-        disable 'InvalidPackage'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17  // ✅ Ensure Java uses 17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"  // ✅ Ensure Kotlin uses JVM 17
     }
 }
+
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
